@@ -1,6 +1,6 @@
 import pytest
 
-from ..serializers import MovieSerializer
+from ..serializers import MovieSerializer, OMDBResponseSerializer
 
 
 @pytest.mark.django_db
@@ -36,3 +36,16 @@ class TestMovieSerializer:
         serializer = MovieSerializer(movie)
 
         assert 'genre' not in serializer.data
+
+
+class TestOMDBResponseSerializer:
+
+    def test_serializes_title_and_rating_when_valid_response_from_omdb(self):
+        valid_omdb_response = {'Title': 'Memento', 'Year': '2000', 'imdbRating': '8.5'}
+
+        serializer = OMDBResponseSerializer(valid_omdb_response)
+
+        assert serializer.data == {
+            'title': 'Memento',
+            'rating': '8.5'
+        }
