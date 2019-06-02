@@ -24,3 +24,8 @@ class MovieSerializer(serializers.ModelSerializer):
             del representation['genre']
 
         return representation
+
+
+class OMDBResponseSerializer(serializers.Serializer):
+    title = serializers.CharField(source='Title', max_length=256)
+    rating = serializers.CharField(source='imdbRating', max_length=256)
