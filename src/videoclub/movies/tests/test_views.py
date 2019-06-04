@@ -35,3 +35,11 @@ class TestCreateMovie:
 
         assert response.status_code == status.HTTP_201_CREATED
         assert Movie.objects.filter(title='Top Gun', price='7.95').exists()
+
+    def test_returns_bad_request_when_data_without_price(self, client):
+        data = {'title': 'Titanic'}
+
+        response = client.post('/movies/', data)
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.json() == {'price': ['This field is required.']}
