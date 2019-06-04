@@ -16,6 +16,18 @@ class TestGetMovie:
             'price': '10.00',
         }
 
+    @pytest.mark.usefixtures('flag_show_ratings_active')
+    def test_returns_movie_with_score_when_feature_flag_is_active(
+            self, client, movie_with_score):
+        response = client.get(f'/movies/{movie_with_score.id}')
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == {
+            'title': 'Die Hard',
+            'price': '9.00',
+            'score': 10,
+        }
+
     def test_returns_not_found_when_movie_does_not_exist(self, client):
         response = client.get('/movies/1')
 
