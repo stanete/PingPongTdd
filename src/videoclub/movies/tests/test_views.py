@@ -53,6 +53,17 @@ class TestListMovies:
             'price': '10.00',
         }]
 
+    @pytest.mark.usefixtures('flag_show_ratings_active', 'movie_with_score')
+    def test_returns_movies_list_with_scores_when_feature_flag_is_active(self, client):
+        response = client.get(f'/movies/')
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == [{
+            'title': 'Die Hard',
+            'price': '9.00',
+            'score': 10,
+        }]
+
 
 @pytest.mark.django_db
 class TestCreateMovie:
