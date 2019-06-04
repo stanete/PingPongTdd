@@ -1,6 +1,6 @@
 import pytest
 
-from videoclub.movies.models import Movie
+from ..models import Movie
 
 
 @pytest.mark.django_db
@@ -16,3 +16,9 @@ class TestMovie:
 
         movie = Movie.objects.get(title='Titanic', price='3.95')
         assert movie.score == 0
+
+    def test_creates_a_movie_with_no_genre(self):
+        Movie.objects.create(title='Titanic', price='3.95')
+
+        movie = Movie.objects.get(title='Titanic', price='3.95')
+        assert movie.genre is None
