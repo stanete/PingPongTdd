@@ -28,6 +28,17 @@ class TestGetMovie:
             'score': 10,
         }
 
+    def test_returns_movie_with_genre_when_movie_has_genre(
+            self, client, movie_with_genre):
+        response = client.get(f'/movies/{movie_with_genre.id}')
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == {
+            'title': 'Fast and Furious',
+            'price': '7.00',
+            'genre': 'Action',
+        }
+
     def test_returns_not_found_when_movie_does_not_exist(self, client):
         response = client.get('/movies/1')
 
