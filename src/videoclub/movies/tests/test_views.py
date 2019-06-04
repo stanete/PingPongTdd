@@ -79,6 +79,17 @@ class TestCreateMovie:
         assert response.status_code == status.HTTP_201_CREATED
         assert Movie.objects.filter(title='Top Gun', price='7.95').exists()
 
+    def test_creates_movie_with_default_score_when_score_is_passed(self, client):
+        data = {
+            'title': 'Top Gun',
+            'price': '7.95',
+            'score': 10,
+        }
+
+        response = client.post('/movies/', data)
+        assert response.status_code == status.HTTP_201_CREATED
+        assert Movie.objects.get(title='Top Gun', price='7.95').score == 0
+
     def test_returns_bad_request_when_data_without_price(self, client):
         data = {'title': 'Titanic'}
 
