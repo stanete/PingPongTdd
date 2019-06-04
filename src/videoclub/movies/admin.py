@@ -7,6 +7,7 @@ from videoclub.movies.models import Movie
 
 @register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    fields = ('title', 'price', 'score',)
-    list_display = ('title', 'score',)
+    fields = ('title', 'price', 'score', 'genre',)
+    list_display = ('title', 'score', 'genre',)
+    list_filter = ('genre',)
     readonly_fields = ('score',)
