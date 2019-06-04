@@ -9,6 +9,7 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = ('title', 'price', 'score',)
+        read_only_fields = ('score',)
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
