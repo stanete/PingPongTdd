@@ -5,6 +5,6 @@ from videoclub.movies.serializers import MovieSerializer
 
 
 class MoviesView(mixins.RetrieveModelMixin, mixins.CreateModelMixin,
-                 viewsets.GenericViewSet):
+                 mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
