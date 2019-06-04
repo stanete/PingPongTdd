@@ -1,6 +1,8 @@
 import pytest
 from rest_framework import status
 
+from videoclub.movies.models import Movie
+
 
 @pytest.mark.django_db
 class TestGetMovie:
@@ -13,3 +15,18 @@ class TestGetMovie:
             'title': 'John Wick',
             'price': '10.00',
         }
+
+
+@pytest.mark.django_db
+class TestCreateMovie:
+
+    def test_creates_movie_when_data_is_valid(self, client):
+        data = {
+            'title': 'Top Gun',
+            'price': '7.95',
+        }
+
+        response = client.post('/movies/', data)
+
+        assert response.status_code == status.HTTP_201_CREATED
+        assert Movie.objects.filter(title='Top Gun', price='7.95').exists()
