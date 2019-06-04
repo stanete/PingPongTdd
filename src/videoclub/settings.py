@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'videoclub.flags.apps.FlagsConfig',
+    'videoclub.movies.apps.MoviesConfig',
 ]
 
 MIDDLEWARE = [
