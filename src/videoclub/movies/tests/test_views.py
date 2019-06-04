@@ -16,6 +16,11 @@ class TestGetMovie:
             'price': '10.00',
         }
 
+    def test_returns_not_found_when_movie_does_not_exist(self, client):
+        response = client.get('/movies/1')
+
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
 
 @pytest.mark.django_db
 class TestCreateMovie:
