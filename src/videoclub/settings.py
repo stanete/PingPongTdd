@@ -121,3 +121,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# OMDB
+
+API_KEY_FILE = os.path.join(os.path.dirname(BASE_DIR), '.api-key')
+
+if os.path.exists(API_KEY_FILE):
+    API_KEY = open(API_KEY_FILE).read().strip()
+else:
+    API_KEY = ''
