@@ -3,7 +3,7 @@ from decimal import Decimal
 import pytest
 import requests
 
-from ..clients import OMDBClient, Unavailable
+from ..clients import BadRequest, OMDBClient, Unavailable
 
 
 class TestOMDBClient:
@@ -29,3 +29,14 @@ class TestOMDBClient:
 
         with pytest.raises(Unavailable):
             OMDBClient().get_rating_for_movie(title='Die Hard')
+
+    def test_raises_bad_request_when_providing_invalid_api_key(self, responses):
+        responses.add(responses.GET, 'http://www.omdbapi.com/', status=200,
+                      json={'Response': False, 'Error': 'No API key provided.'})
+        client = OMDBClient()
+        client.API_KEY = ''
+
+        with pytest.raises(BadRequest) as exc_info:
+            client.get_rating_for_movie(title='Die Hard')
+
+        assert exc_info.value.message == 'No API key provided.'
