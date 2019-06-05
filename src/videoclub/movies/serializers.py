@@ -28,4 +28,4 @@ class MovieSerializer(serializers.ModelSerializer):
 
 class OMDBResponseSerializer(serializers.Serializer):
     title = serializers.CharField(source='Title', max_length=256)
-    rating = serializers.CharField(source='imdbRating', max_length=256)
+    rating = serializers.DecimalField(source='imdbRating', max_digits=3, decimal_places=1)

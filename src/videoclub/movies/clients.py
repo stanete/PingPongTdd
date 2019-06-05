@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import requests
 from django.conf import settings
 
@@ -12,4 +14,5 @@ class OMDBClient:
         response = requests.get(self.HOST_URL, params={'t': title, 'apikey': self.API_KEY})
         serializer = OMDBResponseSerializer(response.json())
 
-        return serializer.data.get('rating')
+        movie_rating = serializer.data.get('rating')
+        return Decimal(movie_rating)
